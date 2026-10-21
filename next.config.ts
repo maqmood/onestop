@@ -2,6 +2,8 @@
 import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
+  // CLAUDE.md is the only agent-instruction file; stop `next dev` writing AGENTS.md.
+  agentRules: false,
   cacheComponents: true,
   partialPrefetching: true,
   turbopack: {
