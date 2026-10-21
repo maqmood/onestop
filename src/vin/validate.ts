@@ -15,7 +15,11 @@
  *     logging elsewhere must still hash it (CLAUDE.md non-negotiable 4).
  */
 
-/** Transliteration table for the check-digit algorithm. Digits map to themselves. */
+/**
+ * Transliteration table for the check-digit algorithm. Digits map to themselves.
+ * Rows mirror the standard's letter groups (A–H, J–R, S–Z), hence the formatter opt-out.
+ */
+// prettier-ignore
 const TRANSLITERATION: Record<string, number> = {
   A: 1, B: 2, C: 3, D: 4, E: 5, F: 6, G: 7, H: 8,
   J: 1, K: 2, L: 3, M: 4, N: 5, P: 7, R: 9,
@@ -30,11 +34,7 @@ const VIN_PATTERN = /^[A-HJ-NPR-Z0-9]{17}$/;
 export type CheckDigitStatus = 'valid' | 'invalid' | 'absent' | 'not_applicable';
 
 export type VinReason =
-  | 'empty'
-  | 'length'
-  | 'illegal_characters'
-  | 'check_digit_invalid'
-  | 'check_digit_absent';
+  'empty' | 'length' | 'illegal_characters' | 'check_digit_invalid' | 'check_digit_absent';
 
 export interface VinValidation {
   /** True when the VIN can be sent to providers. */
@@ -86,7 +86,7 @@ export function computeCheckDigit(vin: string): string {
       // Unreachable for inputs that match VIN_PATTERN; guards against misuse.
       throw new Error(`Illegal VIN character at position ${i + 1}`);
     }
-    sum += value * WEIGHTS[i];
+    sum += value * (WEIGHTS[i] as number);
   }
   const remainder = sum % 11;
   return remainder === 10 ? 'X' : String(remainder);
@@ -105,13 +105,28 @@ export function validateVin(raw: string): VinValidation {
   const reasons: VinReason[] = [];
 
   if (vin.length === 0) {
-    return { ok: false, vin, reasons: ['empty'], northAmericanWmi: false, checkDigit: 'absent', hints: [] };
+    return {
+      ok: false,
+      vin,
+      reasons: ['empty'],
+      northAmericanWmi: false,
+      checkDigit: 'absent',
+      hints: [],
+    };
   }
   if (vin.length !== 17) reasons.push('length');
-  if (/[IOQ]/.test(vin) || (vin.length === 17 && !VIN_PATTERN.test(vin))) reasons.push('illegal_characters');
+  if (/[IOQ]/.test(vin) || (vin.length === 17 && !VIN_PATTERN.test(vin)))
+    reasons.push('illegal_characters');
 
   if (reasons.length > 0) {
-    return { ok: false, vin, reasons, northAmericanWmi: isNorthAmericanWmi(vin), checkDigit: 'absent', hints: [] };
+    return {
+      ok: false,
+      vin,
+      reasons,
+      northAmericanWmi: isNorthAmericanWmi(vin),
+      checkDigit: 'absent',
+      hints: [],
+    };
   }
 
   const northAmericanWmi = isNorthAmericanWmi(vin);

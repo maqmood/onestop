@@ -41,11 +41,11 @@ export interface NormalisedRecord {
 export type ProviderStatus = 'ok' | 'no_records' | 'error';
 
 export type ProviderErrorClass =
-  | 'auth'          // credentials rejected
-  | 'quota'         // rate or budget limit hit
+  | 'auth' // credentials rejected
+  | 'quota' // rate or budget limit hit
   | 'timeout'
-  | 'upstream'      // provider returned 5xx or malformed data
-  | 'unsupported';  // provider cannot answer for this VIN (e.g. non-NA VIN)
+  | 'upstream' // provider returned 5xx or malformed data
+  | 'unsupported'; // provider cannot answer for this VIN (e.g. non-NA VIN)
 
 export interface ProviderResult {
   /** Must match a `sources.key` row. */
