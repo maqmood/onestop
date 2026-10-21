@@ -1,4 +1,6 @@
 engineStrict: true
 ignoredBuiltDependencies:
+  - '@parcel/watcher'
+  - '@swc/core'
   - sharp
   - unrs-resolver
