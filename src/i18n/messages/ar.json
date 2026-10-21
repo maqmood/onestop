@@ -1,0 +1,13 @@
+{
+  "Layout": {
+    "productName": "OneStop"
+  },
+  "Home": {
+    "status": "Private alpha"
+  },
+  "LocaleSwitcher": {
+    "label": "Language",
+    "en": "English",
+    "ar": "العربية"
+  }
+}
