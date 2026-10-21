@@ -1,0 +1,3 @@
+# Docs are hand-wrapped prose; reformatting them is churn, not a fix.
+*.md
+pnpm-lock.yaml

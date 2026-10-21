@@ -1,0 +1,22 @@
+# dependencies
+/node_modules
+
+# testing
+/coverage
+
+# next.js
+/.next/
+/out/
+/build
+next-env.d.ts
+*.tsbuildinfo
+
+# env files: only the documented template is committed (CLAUDE.md non-negotiable 10)
+.env*
+!.env.example
+
+# misc
+.DS_Store
+*.pem
+.vercel
+*.log
